@@ -18,7 +18,7 @@ class SparqlExamplesLoader(BaseLoader):
         Initialize the SparqlExamplesLoader.
 
         Args:
-            sparql_endpoint (str): URL of the SPARQL endpoint to retrieve SPARQL queries from.
+            endpoint_url (str): URL of the SPARQL endpoint to retrieve SPARQL queries examples from.
         """
         self.endpoint_url = endpoint_url
         store = sparqlstore.SPARQLStore(query_endpoint=endpoint_url, auth=None)
@@ -30,8 +30,7 @@ class SparqlExamplesLoader(BaseLoader):
             raise ValueError(f"Could not query the provided endpoint at {endpoint_url}: {e}") from e
 
     def load(self) -> List[Document]:
-        """Load and return documents (classes and properties) from the SPARQL endpoint."""
-        # Extract classes and properties as documents
+        """Load and return documents from the SPARQL endpoint."""
         docs: List[Document] = []
 
         # Get prefixes
@@ -88,5 +87,5 @@ WHERE {
 
     def _remove_a_tags(self, text: str) -> str:
         """Remove <a> tags from a string."""
-        # Use re.sub to replace the <a> tags with the content inside them
+        # TODO: fix this
         return re.sub(self.atag_pattern, r"\1", text)
